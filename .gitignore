@@ -1,4 +1,35 @@
+# Composer
+/vendor/
+composer.phar
+
+# DDEV local development environment
+/.ddev/
+
+# Drupal public/private/temporary files
+/web/sites/*/files/
+/web/sites/*/private/
+/web/sites/*/tmp/
+
+# Drupal settings that are environment-specific
+/web/sites/*/settings.local.php
+
+# Configuration sync directory (contains sensitive info)
+/web/sites/default/files/config_*/
+
+# Node / frontend build assets
+/node_modules/
+/web/themes/custom/*/node_modules/
+
+# Databases, logs, and other runtime artifacts
+*.sql
+*.sqlite
+*.log
+.htpasswd
+
+# OS / editor files
 .DS_Store
 Thumbs.db
-.vscode/
 .idea/
+.vscode/
+*.swp
+*.swo
