@@ -31,9 +31,7 @@ composer.phar
 Thumbs.db
 .idea/
 .vscode/
-HEAD
-.idea/
 web/sites/default/settings.php
 *.swp
 *.swo
-460c53a5f08881c2473497cf3d35a54ec31a4571
+
