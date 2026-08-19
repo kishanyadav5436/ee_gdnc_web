@@ -1,0 +1,41 @@
+# ============================================================
+# MariaDB - local database server (binaries + data)
+# ============================================================
+mariadb/
+
+# ============================================================
+# PHP 8.3 - local PHP runtime (binaries)
+# ============================================================
+php83/
+
+# ============================================================
+# Drupal project - vendor & generated files
+# ============================================================
+ee-gndec-website/vendor/
+ee-gndec-website/web/sites/*/files/
+ee-gndec-website/web/sites/*/private/
+ee-gndec-website/web/sites/*/tmp/
+ee-gndec-website/web/sites/*/settings.local.php
+ee-gndec-website/web/sites/default/settings.php
+ee-gndec-website/web/sites/default/files/config_*/
+
+# Node modules (theme build)
+ee-gndec-website/node_modules/
+ee-gndec-website/web/themes/custom/*/node_modules/
+
+# ============================================================
+# Database / log dumps
+# ============================================================
+*.sql
+*.sqlite
+*.log
+
+# ============================================================
+# OS & editor artifacts
+# ============================================================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
