@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * EE GNDEC theme hook implementations.
+ */
+
+/**
+ * Implements hook_preprocess_HOOK() for html.html.twig.
+ */
+function ee_gndec_preprocess_html(&$variables) {
+  // Add body class for dark theme.
+  $variables['attributes']['class'][] = 'ee-gndec-dark';
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page.html.twig.
+ */
+function ee_gndec_preprocess_page(&$variables) {
+  // Pass site name to template.
+  $config = \Drupal::config('system.site');
+  $variables['site_name'] = $config->get('name');
+  $variables['site_slogan'] = $config->get('slogan');
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node.html.twig.
+ */
+function ee_gndec_preprocess_node(&$variables) {
+  // Additional node preprocessing if needed.
+}

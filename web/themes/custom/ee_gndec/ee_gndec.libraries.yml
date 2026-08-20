@@ -1,0 +1,16 @@
+global-styling:
+  version: VERSION
+  css:
+    theme:
+      css/global.css: {}
+      css/components.css: {}
+
+navigation:
+  version: VERSION
+  css:
+    theme:
+      css/navigation.css: {}
+  js:
+    js/navigation.js: {}
+  dependencies:
+    - core/drupal

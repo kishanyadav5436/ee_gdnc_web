@@ -1,0 +1,216 @@
+{#
+/**
+ * @file
+ * EE GNDEC theme implementation for the main page.
+ *
+ * @see template_preprocess_page()
+ */
+#}
+<!DOCTYPE html>
+<html{{ html_attributes }}>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if head_title %}{{ head_title }}{% else %}EE Department — GNDEC Ludhiana{% endif %}</title>
+  <meta name="description" content="Official website of the Electrical Engineering Department, Guru Nanak Dev Engineering College (GNDEC), Ludhiana.">
+  {{ head }}
+  {{ styles }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body{{ attributes }}>
+
+  {{ page_top }}
+
+  {# ── Notice Ticker ─────────────────────────────────── #}
+  <div class="notice-ticker" role="marquee" aria-label="Important notices">
+    <div class="notice-ticker__inner">
+      <span class="notice-ticker__label">📢 Notice</span>
+      <span class="notice-ticker__text">
+        Welcome to the Department of Electrical Engineering, GNDEC Ludhiana &nbsp;•&nbsp;
+        Admissions Open for B.Tech EE 2024-25 &nbsp;•&nbsp;
+        Faculty Development Programme scheduled for next week &nbsp;•&nbsp;
+        Check Notices section for latest exam schedule
+      </span>
+    </div>
+  </div>
+
+  {# ── Site Header / Navigation ──────────────────────── #}
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+
+      {# Logo / Branding #}
+      <a href="{{ path('<front>') }}" class="site-branding" aria-label="EE GNDEC — Home">
+        <div class="site-branding__logo" aria-hidden="true">EE</div>
+        <div class="site-branding__text">
+          <div class="site-branding__name">EE Department</div>
+          <div class="site-branding__sub">GNDEC Ludhiana</div>
+        </div>
+      </a>
+
+      {# Mobile Menu Toggle #}
+      <button class="nav-toggle" id="nav-toggle" aria-controls="primary-nav"
+              aria-expanded="false" aria-label="Toggle navigation menu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+
+      {# Primary Navigation #}
+      <nav class="primary-nav" id="primary-nav" role="navigation" aria-label="Main navigation">
+        <ul class="primary-nav__list">
+
+          <li class="primary-nav__item">
+            <a href="{{ path('<front>') }}" class="primary-nav__link">Home</a>
+          </li>
+
+          <li class="primary-nav__item">
+            <a href="/about" class="primary-nav__link" data-has-dropdown="true">
+              About <span class="caret" aria-hidden="true">▾</span>
+            </a>
+            <ul class="primary-nav__dropdown">
+              <li><a href="/about/department">About Department</a></li>
+              <li><a href="/about/vision-mission">Vision &amp; Mission</a></li>
+              <li><a href="/about/hod-message">HOD's Message</a></li>
+              <li><a href="/about/history">History</a></li>
+            </ul>
+          </li>
+
+          <li class="primary-nav__item">
+            <a href="/faculty-staff" class="primary-nav__link" data-has-dropdown="true">
+              Faculty &amp; Staff <span class="caret" aria-hidden="true">▾</span>
+            </a>
+            <ul class="primary-nav__dropdown">
+              <li><a href="/faculty-staff/teaching">Teaching Faculty</a></li>
+              <li><a href="/faculty-staff/technical">Technical Staff</a></li>
+              <li><a href="/faculty-staff/administrative">Administrative Staff</a></li>
+            </ul>
+          </li>
+
+          <li class="primary-nav__item">
+            <a href="/academics" class="primary-nav__link" data-has-dropdown="true">
+              Academics <span class="caret" aria-hidden="true">▾</span>
+            </a>
+            <ul class="primary-nav__dropdown">
+              <li><a href="/academics/courses">Courses Offered</a></li>
+              <li><a href="/academics/syllabus">Syllabus</a></li>
+              <li><a href="/academics/timetable">Time Table</a></li>
+              <li><a href="/academics/results">Results</a></li>
+            </ul>
+          </li>
+
+          <li class="primary-nav__item">
+            <a href="/notices" class="primary-nav__link">Notices</a>
+          </li>
+
+          <li class="primary-nav__item">
+            <a href="/events" class="primary-nav__link">Events</a>
+          </li>
+
+          <li class="primary-nav__item">
+            <a href="/labs-facilities" class="primary-nav__link" data-has-dropdown="true">
+              Labs &amp; Facilities <span class="caret" aria-hidden="true">▾</span>
+            </a>
+            <ul class="primary-nav__dropdown">
+              <li><a href="/labs-facilities/power-systems">Power Systems Lab</a></li>
+              <li><a href="/labs-facilities/machines">Electrical Machines Lab</a></li>
+              <li><a href="/labs-facilities/control-systems">Control Systems Lab</a></li>
+              <li><a href="/labs-facilities/electronics">Electronics Lab</a></li>
+            </ul>
+          </li>
+
+          <li class="primary-nav__item">
+            <a href="/research" class="primary-nav__link" data-has-dropdown="true">
+              Research <span class="caret" aria-hidden="true">▾</span>
+            </a>
+            <ul class="primary-nav__dropdown">
+              <li><a href="/research/publications">Publications</a></li>
+              <li><a href="/research/projects">Projects</a></li>
+              <li><a href="/research/areas">Research Areas</a></li>
+            </ul>
+          </li>
+
+          <li class="primary-nav__item">
+            <a href="/student-corner" class="primary-nav__link" data-has-dropdown="true">
+              Student Corner <span class="caret" aria-hidden="true">▾</span>
+            </a>
+            <ul class="primary-nav__dropdown">
+              <li><a href="/student-corner/placements">Placements</a></li>
+              <li><a href="/student-corner/clubs">Clubs</a></li>
+              <li><a href="/student-corner/scholarships">Scholarships</a></li>
+            </ul>
+          </li>
+
+          <li class="primary-nav__item">
+            <a href="/downloads" class="primary-nav__link">Downloads/Docs</a>
+          </li>
+
+          <li class="primary-nav__item">
+            <a href="/societies-activities" class="primary-nav__link">Societies &amp; Activities</a>
+          </li>
+
+          <li class="primary-nav__item">
+            <a href="/achievements" class="primary-nav__link">Achievements</a>
+          </li>
+
+          <li class="primary-nav__item">
+            <a href="/gallery" class="primary-nav__link">Gallery</a>
+          </li>
+
+          <li class="primary-nav__item">
+            <a href="/contact" class="primary-nav__link">Contact Us</a>
+          </li>
+
+        </ul>
+      </nav>
+
+      {# Header Actions #}
+      <div class="header-actions">
+        <a href="{{ path('user.login') }}" class="btn-login" id="header-login-btn">
+          🔐 Login
+        </a>
+      </div>
+
+    </div>{# /.header-inner #}
+  </header>
+
+  {# ── Main Content ──────────────────────────────────── #}
+  <main id="main-content" class="layout-main" role="main" tabindex="-1">
+    <div class="layout-container">
+
+      {% if page.highlighted %}
+        <div class="region-highlighted">{{ page.highlighted }}</div>
+      {% endif %}
+
+      {% if page.breadcrumb %}
+        <div class="breadcrumb">{{ page.breadcrumb }}</div>
+      {% endif %}
+
+      {% if page.content %}
+        {{ page.content }}
+      {% endif %}
+
+    </div>
+  </main>
+
+  {# ── Site Footer ───────────────────────────────────── #}
+  <footer class="site-footer" role="contentinfo">
+    <div class="layout-container">
+      <p>
+        &copy; {{ "now"|date("Y") }} &nbsp;|&nbsp;
+        <strong>Department of Electrical Engineering</strong> &nbsp;|&nbsp;
+        Guru Nanak Dev Engineering College, Ludhiana – 141006, Punjab, India
+      </p>
+      <p style="margin-top:0.5rem;">
+        <a href="/contact" style="color:#64748b;font-size:0.78rem;">Contact</a> &nbsp;•&nbsp;
+        <a href="/privacy-policy" style="color:#64748b;font-size:0.78rem;">Privacy Policy</a> &nbsp;•&nbsp;
+        <a href="/sitemap" style="color:#64748b;font-size:0.78rem;">Sitemap</a>
+      </p>
+    </div>
+  </footer>
+
+  {{ page_bottom }}
+  {{ scripts }}
+
+</body>
+</html>

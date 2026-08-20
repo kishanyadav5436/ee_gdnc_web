@@ -1,0 +1,23 @@
+name: 'EE GNDEC'
+type: theme
+description: 'Custom theme for the Electrical Engineering Department of GNDEC, Ludhiana.'
+package: Custom
+core_version_requirement: ^10 || ^11
+base theme: false
+version: '1.0.0'
+
+libraries:
+  - ee_gndec/global-styling
+  - ee_gndec/navigation
+
+regions:
+  header: 'Header'
+  primary_menu: 'Primary Menu'
+  secondary_menu: 'Secondary Menu'
+  highlighted: 'Highlighted'
+  breadcrumb: 'Breadcrumb'
+  content: 'Content'
+  sidebar_first: 'Sidebar First'
+  sidebar_second: 'Sidebar Second'
+  footer: 'Footer'
+  page_bottom: 'Page Bottom'

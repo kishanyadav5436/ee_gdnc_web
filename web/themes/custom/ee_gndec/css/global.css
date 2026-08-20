@@ -1,0 +1,204 @@
+/* ============================================================
+   EE GNDEC Theme — Global Styles
+   Electrical Engineering Department, GNDEC Ludhiana
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap');
+
+/* ---------- CSS Variables / Design Tokens ---------- */
+:root {
+  --clr-primary:    #0f3460;   /* deep navy */
+  --clr-secondary:  #e94560;   /* vivid red-pink */
+  --clr-accent:     #f5a623;   /* warm gold */
+  --clr-dark:       #0a0f1e;
+  --clr-surface:    #111827;
+  --clr-card:       rgba(255,255,255,0.04);
+  --clr-border:     rgba(255,255,255,0.08);
+  --clr-text:       #e2e8f0;
+  --clr-muted:      #94a3b8;
+  --clr-white:      #ffffff;
+
+  --font-body:      'Inter', system-ui, sans-serif;
+  --font-display:   'Outfit', system-ui, sans-serif;
+
+  --shadow-sm:      0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md:      0 4px 16px rgba(0,0,0,0.4);
+  --shadow-lg:      0 12px 40px rgba(0,0,0,0.5);
+  --shadow-glow:    0 0 20px rgba(233,69,96,0.25);
+
+  --radius-sm:  6px;
+  --radius-md:  12px;
+  --radius-lg:  20px;
+  --radius-xl:  32px;
+
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--clr-dark);
+  color: var(--clr-text);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--clr-surface); }
+::-webkit-scrollbar-thumb {
+  background: var(--clr-secondary);
+  border-radius: 999px;
+}
+
+/* ---------- Typography ---------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--clr-white);
+}
+
+a {
+  color: var(--clr-secondary);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+a:hover { color: var(--clr-accent); }
+
+img { max-width: 100%; display: block; }
+
+/* ---------- Layout ---------- */
+.layout-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+main.layout-main {
+  min-height: calc(100vh - 80px);
+  padding: 2rem 0 4rem;
+}
+
+/* ---------- Hero Gradient Background ---------- */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  right: -20%;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(233,69,96,0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -30%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(15,52,96,0.35) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---------- Section Spacing ---------- */
+section { padding: 5rem 0; }
+
+/* ---------- Utilities ---------- */
+.text-gradient {
+  background: linear-gradient(135deg, var(--clr-secondary), var(--clr-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass {
+  background: var(--clr-card);
+  border: 1px solid var(--clr-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  transition: all var(--transition);
+  text-decoration: none;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--clr-secondary), #c0392b);
+  color: var(--clr-white);
+  box-shadow: var(--shadow-glow);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(233,69,96,0.45);
+  color: var(--clr-white);
+}
+.btn-outline {
+  background: transparent;
+  color: var(--clr-text);
+  border: 1px solid var(--clr-border);
+}
+.btn-outline:hover {
+  background: var(--clr-card);
+  border-color: var(--clr-secondary);
+  color: var(--clr-white);
+}
+
+/* ---------- Cards ---------- */
+.card {
+  background: var(--clr-card);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(12px);
+  padding: 1.75rem;
+  transition: all var(--transition);
+}
+.card:hover {
+  border-color: rgba(233,69,96,0.4);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: rgba(10,15,30,0.95);
+  border-top: 1px solid var(--clr-border);
+  padding: 3rem 0 1.5rem;
+  text-align: center;
+}
+.site-footer p {
+  color: var(--clr-muted);
+  font-size: 0.875rem;
+}
+.site-footer strong {
+  color: var(--clr-secondary);
+}
+
+/* ---------- Drupal System Messages ---------- */
+.messages--status  { background: rgba(16,185,129,0.1); border-left: 4px solid #10b981; padding: 1rem 1.5rem; border-radius: var(--radius-sm); margin-bottom: 1rem; }
+.messages--warning { background: rgba(245,166,35,0.1);  border-left: 4px solid var(--clr-accent); padding: 1rem 1.5rem; border-radius: var(--radius-sm); margin-bottom: 1rem; }
+.messages--error   { background: rgba(239,68,68,0.1);   border-left: 4px solid #ef4444; padding: 1rem 1.5rem; border-radius: var(--radius-sm); margin-bottom: 1rem; }
