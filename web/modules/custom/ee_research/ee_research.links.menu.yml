@@ -1,0 +1,12 @@
+ee_research.admin.list:
+  title: 'Research & Publications'
+  description: 'Manage faculty research papers and publications.'
+  route_name: ee_research.admin.list
+  parent: system.admin
+  weight: 12
+
+ee_research.admin.add:
+  title: 'Add Publication'
+  route_name: ee_research.admin.add
+  parent: ee_research.admin.list
+  weight: 1

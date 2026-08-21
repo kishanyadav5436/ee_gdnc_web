@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * EE Labs module — hook implementations.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function ee_labs_help($route_name, RouteMatchInterface $route_match) {
+  if ($route_name === 'help.page.ee_labs') {
+    return '<p>' . t('Provides a Labs & Facilities management system for the EE GNDEC website. Exposes a JSON API at <code>/api/labs</code>.') . '</p>';
+  }
+}

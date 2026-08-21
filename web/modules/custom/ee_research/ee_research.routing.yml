@@ -1,0 +1,61 @@
+# ── Research API Routes ────────────────────────────────────────────────────
+
+ee_research.api.list:
+  path: '/api/research'
+  defaults:
+    _controller: '\Drupal\ee_research\Controller\EeResearchController::list'
+    _title: 'Research Publications API'
+  requirements:
+    _permission: 'access content'
+  methods: [GET]
+  options:
+    no_cache: TRUE
+
+ee_research.api.single:
+  path: '/api/research/{id}'
+  defaults:
+    _controller: '\Drupal\ee_research\Controller\EeResearchController::single'
+    _title: 'Research Publication Detail API'
+  requirements:
+    _permission: 'access content'
+    id: '\d+'
+  methods: [GET]
+  options:
+    no_cache: TRUE
+
+# ── Admin Research Management Routes ──────────────────────────────────────
+
+ee_research.admin.list:
+  path: '/admin/ee-gndec/research'
+  defaults:
+    _controller: '\Drupal\ee_research\Controller\EeResearchController::adminList'
+    _title: 'Manage Research & Publications'
+  requirements:
+    _permission: 'administer site configuration'
+
+ee_research.admin.add:
+  path: '/admin/ee-gndec/research/add'
+  defaults:
+    _form: '\Drupal\ee_research\Form\ResearchForm'
+    _title: 'Add Publication'
+  requirements:
+    _permission: 'administer site configuration'
+
+ee_research.admin.edit:
+  path: '/admin/ee-gndec/research/{id}/edit'
+  defaults:
+    _form: '\Drupal\ee_research\Form\ResearchForm'
+    _title: 'Edit Publication'
+  requirements:
+    _permission: 'administer site configuration'
+    id: '\d+'
+
+ee_research.admin.delete:
+  path: '/admin/ee-gndec/research/{id}/delete'
+  defaults:
+    _controller: '\Drupal\ee_research\Controller\EeResearchController::delete'
+    _title: 'Delete Publication'
+  requirements:
+    _permission: 'administer site configuration'
+    id: '\d+'
+  methods: [GET, POST]

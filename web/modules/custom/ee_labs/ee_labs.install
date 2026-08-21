@@ -1,0 +1,257 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the EE Labs module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function ee_labs_schema() {
+  $schema['ee_labs'] = [
+    'description' => 'Stores labs and facilities information for EE GNDEC website.',
+    'fields' => [
+      'id' => [
+        'description' => 'Primary key.',
+        'type'        => 'serial',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+      ],
+      'name' => [
+        'description' => 'Name of the laboratory.',
+        'type'        => 'varchar',
+        'length'      => 512,
+        'not null'    => TRUE,
+        'default'     => '',
+      ],
+      'lab_code' => [
+        'description' => 'Short lab code (e.g. EE-LAB-01).',
+        'type'        => 'varchar',
+        'length'      => 64,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'description' => [
+        'description' => 'Full description of the lab and its purpose.',
+        'type'        => 'text',
+        'size'        => 'big',
+        'not null'    => FALSE,
+      ],
+      'lab_type' => [
+        'description' => 'Type: teaching, research, computing, other.',
+        'type'        => 'varchar',
+        'length'      => 64,
+        'not null'    => TRUE,
+        'default'     => 'teaching',
+      ],
+      'location' => [
+        'description' => 'Physical location within the campus.',
+        'type'        => 'varchar',
+        'length'      => 256,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'area_sqft' => [
+        'description' => 'Area in square feet.',
+        'type'        => 'float',
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'capacity' => [
+        'description' => 'Student capacity.',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'incharge' => [
+        'description' => 'Name of the lab incharge faculty.',
+        'type'        => 'varchar',
+        'length'      => 256,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'major_equipment' => [
+        'description' => 'Comma-separated list of major equipment/instruments.',
+        'type'        => 'text',
+        'size'        => 'medium',
+        'not null'    => FALSE,
+      ],
+      'image_url' => [
+        'description' => 'Lab photo URL.',
+        'type'        => 'varchar',
+        'length'      => 1024,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'established_year' => [
+        'description' => 'Year the lab was established.',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'sort_order' => [
+        'description' => 'Display order (lower number appears first).',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'status' => [
+        'description' => '1 = active, 0 = inactive.',
+        'type'        => 'int',
+        'size'        => 'tiny',
+        'not null'    => TRUE,
+        'default'     => 1,
+      ],
+      'created' => [
+        'description' => 'Record creation timestamp.',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'uid' => [
+        'description' => 'Drupal user ID of the creator.',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 1,
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'status_sort' => ['status', 'sort_order'],
+      'lab_type'    => ['lab_type'],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ * Seeds the EE department's actual labs.
+ */
+function ee_labs_install() {
+  $db  = \Drupal::database();
+  $now = \Drupal::time()->getRequestTime();
+
+  $labs = [
+    [
+      'name'             => 'Power Systems Laboratory',
+      'lab_code'         => 'EE-LAB-01',
+      'description'      => 'Equipped for experiments on power system analysis, load flow studies, fault analysis, and protection systems. Features digital relays, MATLAB/Simulink workstations, and power quality analyzers.',
+      'lab_type'         => 'teaching',
+      'location'         => 'Ground Floor, EE Block',
+      'area_sqft'        => 2400.0,
+      'capacity'         => 30,
+      'incharge'         => 'Dr. Harpreet Singh',
+      'major_equipment'  => 'Digital Relays, Power Quality Analyser, MATLAB Workstations, 3-Phase Power Supply Units, Digital Storage Oscilloscopes',
+      'image_url'        => NULL,
+      'established_year' => 2010,
+      'sort_order'       => 1,
+      'status'           => 1,
+      'created'          => $now,
+      'uid'              => 1,
+    ],
+    [
+      'name'             => 'Electrical Machines Laboratory',
+      'lab_code'         => 'EE-LAB-02',
+      'description'      => 'Comprehensive lab for study of DC motors, generators, transformers, induction motors, synchronous machines, and special electrical machines with computer-aided testing facilities.',
+      'lab_type'         => 'teaching',
+      'location'         => 'First Floor, EE Block',
+      'area_sqft'        => 3200.0,
+      'capacity'         => 30,
+      'incharge'         => 'Prof. Rajinder Kumar',
+      'major_equipment'  => 'DC Motor-Generator Sets, 3-Phase Induction Motors, Transformers, Synchronous Machines, Tachometers, Power Analyzers',
+      'image_url'        => NULL,
+      'established_year' => 2008,
+      'sort_order'       => 2,
+      'status'           => 1,
+      'created'          => $now,
+      'uid'              => 1,
+    ],
+    [
+      'name'             => 'Control Systems Laboratory',
+      'lab_code'         => 'EE-LAB-03',
+      'description'      => 'Dedicated to study of control theory, PID controllers, PLC programming, SCADA systems, and industrial automation. Features LabVIEW software and PLC trainer kits.',
+      'lab_type'         => 'teaching',
+      'location'         => 'First Floor, EE Block',
+      'area_sqft'        => 1800.0,
+      'capacity'         => 24,
+      'incharge'         => 'Dr. Gurpreet Singh',
+      'major_equipment'  => 'Siemens S7-1200 PLCs, SCADA Trainer, LabVIEW Software, PID Controller Kits, Process Control Trainer',
+      'image_url'        => NULL,
+      'established_year' => 2012,
+      'sort_order'       => 3,
+      'status'           => 1,
+      'created'          => $now,
+      'uid'              => 1,
+    ],
+    [
+      'name'             => 'Electronics & Microprocessors Laboratory',
+      'lab_code'         => 'EE-LAB-04',
+      'description'      => 'Covers analog and digital electronics, microprocessor (8085/8086) and microcontroller (8051/Arduino/Raspberry Pi) interfacing experiments.',
+      'lab_type'         => 'teaching',
+      'location'         => 'Ground Floor, EE Block',
+      'area_sqft'        => 2000.0,
+      'capacity'         => 30,
+      'incharge'         => 'Prof. Mandeep Kaur',
+      'major_equipment'  => 'DSO 4-Channel Oscilloscopes, Function Generators, Digital IC Trainers, 8085 Microprocessor Kits, Arduino/Raspberry Pi Boards, Bread Boards',
+      'image_url'        => NULL,
+      'established_year' => 2009,
+      'sort_order'       => 4,
+      'status'           => 1,
+      'created'          => $now,
+      'uid'              => 1,
+    ],
+    [
+      'name'             => 'Power Electronics Laboratory',
+      'lab_code'         => 'EE-LAB-05',
+      'description'      => 'Focuses on power semiconductor devices, thyristor circuits, DC-DC converters, inverters, AC-AC controllers, and renewable energy conversion systems.',
+      'lab_type'         => 'teaching',
+      'location'         => 'Second Floor, EE Block',
+      'area_sqft'        => 1600.0,
+      'capacity'         => 24,
+      'incharge'         => 'Dr. Sukhwinder Singh',
+      'major_equipment'  => 'SCR Firing Circuits, IGBT Inverter Kits, DSP Controllers, Solar Panel Emulator, Variable Frequency Drive (VFD)',
+      'image_url'        => NULL,
+      'established_year' => 2015,
+      'sort_order'       => 5,
+      'status'           => 1,
+      'created'          => $now,
+      'uid'              => 1,
+    ],
+    [
+      'name'             => 'High Voltage Laboratory',
+      'lab_code'         => 'EE-LAB-06',
+      'description'      => 'Specialized high voltage testing facility for study of dielectric testing, surge arrestors, insulation testing, and high voltage breakdown phenomena.',
+      'lab_type'         => 'research',
+      'location'         => 'Basement, EE Block',
+      'area_sqft'        => 2800.0,
+      'capacity'         => 15,
+      'incharge'         => 'Prof. Amandeep Sharma',
+      'major_equipment'  => 'Tesla Coil, High Voltage Transformer (100kV), Partial Discharge Analyzer, Impulse Voltage Generator, Tan Delta Test Kit',
+      'image_url'        => NULL,
+      'established_year' => 2018,
+      'sort_order'       => 6,
+      'status'           => 1,
+      'created'          => $now,
+      'uid'              => 1,
+    ],
+  ];
+
+  foreach ($labs as $lab) {
+    $db->insert('ee_labs')->fields($lab)->execute();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function ee_labs_uninstall() {
+  \Drupal::database()->schema()->dropTable('ee_labs');
+}

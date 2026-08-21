@@ -1,0 +1,6 @@
+name: 'EE Notices'
+type: module
+description: 'Notice Management module for EE GNDEC website. Provides backend API and admin UI for department notices.'
+package: 'EE GNDEC Custom'
+core_version_requirement: ^11
+version: '1.0.0'

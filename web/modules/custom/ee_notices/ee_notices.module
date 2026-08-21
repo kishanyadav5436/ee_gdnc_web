@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * EE Notices module — hook implementations.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function ee_notices_help($route_name, RouteMatchInterface $route_match) {
+  if ($route_name === 'help.page.ee_notices') {
+    return '<p>' . t('Provides a Notice Management system for the EE GNDEC website. Exposes a JSON API at <code>/api/notices</code>.') . '</p>';
+  }
+}
+
+/**
+ * Implements hook_toolbar().
+ *
+ * Adds a quick link to manage notices in the Drupal toolbar.
+ */
+function ee_notices_toolbar() {
+  $items = [];
+  if (\Drupal::currentUser()->hasPermission('administer site configuration')) {
+    $items['ee_notices'] = [
+      '#type'   => 'toolbar_item',
+      'tab'     => [
+        '#type'  => 'link',
+        '#title' => t('Notices'),
+        '#url'   => \Drupal\Core\Url::fromRoute('ee_notices.admin.list'),
+        '#attributes' => ['class' => ['toolbar-icon']],
+      ],
+      '#weight' => 100,
+    ];
+  }
+  return $items;
+}

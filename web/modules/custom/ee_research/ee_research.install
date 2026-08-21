@@ -1,0 +1,219 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the EE Research module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function ee_research_schema() {
+  $schema['ee_research'] = [
+    'description' => 'Stores research publications for the EE GNDEC website.',
+    'fields' => [
+      'id' => [
+        'description' => 'Primary key.',
+        'type'        => 'serial',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+      ],
+      'title' => [
+        'description' => 'Title of the research paper / publication.',
+        'type'        => 'varchar',
+        'length'      => 1024,
+        'not null'    => TRUE,
+        'default'     => '',
+      ],
+      'authors' => [
+        'description' => 'Comma-separated list of author names.',
+        'type'        => 'varchar',
+        'length'      => 1024,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'abstract' => [
+        'description' => 'Abstract / summary of the paper.',
+        'type'        => 'text',
+        'size'        => 'big',
+        'not null'    => FALSE,
+      ],
+      'publication_type' => [
+        'description' => 'Type: journal, conference, book_chapter, patent, project.',
+        'type'        => 'varchar',
+        'length'      => 64,
+        'not null'    => TRUE,
+        'default'     => 'journal',
+      ],
+      'journal_name' => [
+        'description' => 'Name of journal/conference/publisher.',
+        'type'        => 'varchar',
+        'length'      => 512,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'volume' => [
+        'description' => 'Volume number.',
+        'type'        => 'varchar',
+        'length'      => 32,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'issue' => [
+        'description' => 'Issue number.',
+        'type'        => 'varchar',
+        'length'      => 32,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'pages' => [
+        'description' => 'Page range (e.g. 123-131).',
+        'type'        => 'varchar',
+        'length'      => 32,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'year' => [
+        'description' => 'Year of publication.',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 2024,
+      ],
+      'doi' => [
+        'description' => 'Digital Object Identifier.',
+        'type'        => 'varchar',
+        'length'      => 256,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'url' => [
+        'description' => 'External link / PDF URL.',
+        'type'        => 'varchar',
+        'length'      => 1024,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'keywords' => [
+        'description' => 'Comma-separated keywords.',
+        'type'        => 'varchar',
+        'length'      => 512,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'is_featured' => [
+        'description' => 'Highlight on homepage.',
+        'type'        => 'int',
+        'size'        => 'tiny',
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'status' => [
+        'description' => '1 = published, 0 = draft.',
+        'type'        => 'int',
+        'size'        => 'tiny',
+        'not null'    => TRUE,
+        'default'     => 1,
+      ],
+      'created' => [
+        'description' => 'Record creation timestamp.',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'uid' => [
+        'description' => 'Author Drupal UID.',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 1,
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'status_year'      => ['status', 'year'],
+      'publication_type' => ['publication_type'],
+      'is_featured'      => ['is_featured'],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ * Seeds sample research publications.
+ */
+function ee_research_install() {
+  $db  = \Drupal::database();
+  $now = \Drupal::time()->getRequestTime();
+
+  $sample = [
+    [
+      'title'            => 'Optimal Placement of FACTS Devices in Power System using Genetic Algorithm',
+      'authors'          => 'Dr. Harpreet Singh, Prof. Mandeep Kaur, Er. Amandeep Sharma',
+      'abstract'         => 'This paper presents an optimal placement strategy for Flexible AC Transmission System (FACTS) devices using Genetic Algorithm to minimize transmission losses and improve voltage stability.',
+      'publication_type' => 'journal',
+      'journal_name'     => 'International Journal of Electrical Power & Energy Systems',
+      'volume'           => '148',
+      'issue'            => '2',
+      'pages'            => '108898',
+      'year'             => 2024,
+      'doi'              => '10.1016/j.ijepes.2023.108898',
+      'url'              => NULL,
+      'keywords'         => 'FACTS, power system, genetic algorithm, voltage stability',
+      'is_featured'      => 1,
+      'status'           => 1,
+      'created'          => $now,
+      'uid'              => 1,
+    ],
+    [
+      'title'            => 'Deep Learning Based Fault Detection in Induction Motors',
+      'authors'          => 'Prof. Rajinder Kumar, Dr. Gurpreet Singh',
+      'abstract'         => 'A convolutional neural network based approach for early fault detection and classification in three-phase induction motors using vibration signal analysis.',
+      'publication_type' => 'conference',
+      'journal_name'     => 'IEEE International Conference on Power Electronics and Smart Grid',
+      'volume'           => NULL,
+      'issue'            => NULL,
+      'pages'            => '1-6',
+      'year'             => 2023,
+      'doi'              => NULL,
+      'url'              => NULL,
+      'keywords'         => 'induction motor, fault detection, deep learning, CNN',
+      'is_featured'      => 1,
+      'status'           => 1,
+      'created'          => $now - 86400,
+      'uid'              => 1,
+    ],
+    [
+      'title'            => 'Solar PV Integration with Microgrid: A Review',
+      'authors'          => 'Dr. Sukhwinder Singh, Er. Navneet Kaur',
+      'abstract'         => 'Comprehensive review of integration techniques for solar photovoltaic systems with microgrids, covering power electronics interfaces, control strategies, and protection schemes.',
+      'publication_type' => 'journal',
+      'journal_name'     => 'Renewable and Sustainable Energy Reviews',
+      'volume'           => '189',
+      'issue'            => NULL,
+      'pages'            => '114012',
+      'year'             => 2024,
+      'doi'              => NULL,
+      'url'              => NULL,
+      'keywords'         => 'solar PV, microgrid, renewable energy, power electronics',
+      'is_featured'      => 0,
+      'status'           => 1,
+      'created'          => $now - 172800,
+      'uid'              => 1,
+    ],
+  ];
+
+  foreach ($sample as $pub) {
+    $db->insert('ee_research')->fields($pub)->execute();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function ee_research_uninstall() {
+  \Drupal::database()->schema()->dropTable('ee_research');
+}

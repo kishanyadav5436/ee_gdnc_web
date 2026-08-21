@@ -1,0 +1,61 @@
+# ── Events API Routes ──────────────────────────────────────────────────────
+
+ee_events.api.list:
+  path: '/api/events'
+  defaults:
+    _controller: '\Drupal\ee_events\Controller\EeEventsController::list'
+    _title: 'Events API'
+  requirements:
+    _permission: 'access content'
+  methods: [GET]
+  options:
+    no_cache: TRUE
+
+ee_events.api.single:
+  path: '/api/events/{id}'
+  defaults:
+    _controller: '\Drupal\ee_events\Controller\EeEventsController::single'
+    _title: 'Event Detail API'
+  requirements:
+    _permission: 'access content'
+    id: '\d+'
+  methods: [GET]
+  options:
+    no_cache: TRUE
+
+# ── Admin Events Management Routes ─────────────────────────────────────────
+
+ee_events.admin.list:
+  path: '/admin/ee-gndec/events'
+  defaults:
+    _controller: '\Drupal\ee_events\Controller\EeEventsController::adminList'
+    _title: 'Manage Events'
+  requirements:
+    _permission: 'administer site configuration'
+
+ee_events.admin.add:
+  path: '/admin/ee-gndec/events/add'
+  defaults:
+    _form: '\Drupal\ee_events\Form\EventForm'
+    _title: 'Add Event'
+  requirements:
+    _permission: 'administer site configuration'
+
+ee_events.admin.edit:
+  path: '/admin/ee-gndec/events/{id}/edit'
+  defaults:
+    _form: '\Drupal\ee_events\Form\EventForm'
+    _title: 'Edit Event'
+  requirements:
+    _permission: 'administer site configuration'
+    id: '\d+'
+
+ee_events.admin.delete:
+  path: '/admin/ee-gndec/events/{id}/delete'
+  defaults:
+    _controller: '\Drupal\ee_events\Controller\EeEventsController::delete'
+    _title: 'Delete Event'
+  requirements:
+    _permission: 'administer site configuration'
+    id: '\d+'
+  methods: [GET, POST]

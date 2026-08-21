@@ -1,0 +1,6 @@
+name: 'EE Labs & Facilities'
+type: module
+description: 'Labs and Facilities Management module for EE GNDEC website. Provides backend API and admin UI for department laboratories and equipment.'
+package: 'EE GNDEC Custom'
+core_version_requirement: ^11
+version: '1.0.0'

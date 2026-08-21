@@ -1,0 +1,6 @@
+name: 'EE Research & Publications'
+type: module
+description: 'Research and Publication Management module for EE GNDEC website. Provides backend API and admin UI for faculty research papers and projects.'
+package: 'EE GNDEC Custom'
+core_version_requirement: ^11
+version: '1.0.0'

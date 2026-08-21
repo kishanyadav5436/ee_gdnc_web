@@ -1,0 +1,6 @@
+name: 'EE Events'
+type: module
+description: 'Event Management module for EE GNDEC website. Provides backend API and admin UI for department events, workshops, and seminars.'
+package: 'EE GNDEC Custom'
+core_version_requirement: ^11
+version: '1.0.0'

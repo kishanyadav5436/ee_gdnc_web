@@ -1,0 +1,12 @@
+ee_events.admin.list:
+  title: 'Events'
+  description: 'Manage department events and workshops.'
+  route_name: ee_events.admin.list
+  parent: system.admin
+  weight: 11
+
+ee_events.admin.add:
+  title: 'Add Event'
+  route_name: ee_events.admin.add
+  parent: ee_events.admin.list
+  weight: 1

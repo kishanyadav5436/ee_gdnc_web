@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * EE Research module — hook implementations.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function ee_research_help($route_name, RouteMatchInterface $route_match) {
+  if ($route_name === 'help.page.ee_research') {
+    return '<p>' . t('Provides a Research & Publications management system for the EE GNDEC website. Exposes a JSON API at <code>/api/research</code>.') . '</p>';
+  }
+}

@@ -1,0 +1,166 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the EE Notices module.
+ */
+
+/**
+ * Implements hook_schema().
+ *
+ * Creates the ee_notices database table when the module is installed.
+ */
+function ee_notices_schema() {
+  $schema['ee_notices'] = [
+    'description' => 'Stores department notices for EE GNDEC website.',
+    'fields' => [
+      'id' => [
+        'description' => 'Primary key — auto-increment notice ID.',
+        'type'        => 'serial',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+      ],
+      'title' => [
+        'description' => 'Title / heading of the notice.',
+        'type'        => 'varchar',
+        'length'      => 512,
+        'not null'    => TRUE,
+        'default'     => '',
+      ],
+      'body' => [
+        'description' => 'Full body / description of the notice.',
+        'type'        => 'text',
+        'size'        => 'big',
+        'not null'    => FALSE,
+      ],
+      'category' => [
+        'description' => 'Category: exam, event, general, urgent, result.',
+        'type'        => 'varchar',
+        'length'      => 64,
+        'not null'    => TRUE,
+        'default'     => 'general',
+      ],
+      'attachment_url' => [
+        'description' => 'Optional URL/path to an attached PDF or file.',
+        'type'        => 'varchar',
+        'length'      => 1024,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'is_pinned' => [
+        'description' => 'Whether this notice is pinned to the top.',
+        'type'        => 'int',
+        'size'        => 'tiny',
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'status' => [
+        'description' => '1 = published, 0 = draft.',
+        'type'        => 'int',
+        'size'        => 'tiny',
+        'not null'    => TRUE,
+        'default'     => 1,
+      ],
+      'created' => [
+        'description' => 'Unix timestamp when the notice was created.',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'expires' => [
+        'description' => 'Unix timestamp when the notice expires (0 = never).',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'uid' => [
+        'description' => 'Drupal user ID of the author.',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 1,
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'status_created' => ['status', 'created'],
+      'category'       => ['category'],
+      'is_pinned'      => ['is_pinned'],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ *
+ * Seeds a few sample notices so the frontend has something to display
+ * immediately after the module is enabled.
+ */
+function ee_notices_install() {
+  $db   = \Drupal::database();
+  $now  = \Drupal::time()->getRequestTime();
+
+  $sample = [
+    [
+      'title'          => 'Admissions Open for B.Tech Electrical Engineering 2024-25',
+      'body'           => 'Applications are invited for B.Tech (Electrical Engineering) for the session 2024-25. Visit the college admission portal for more details.',
+      'category'       => 'general',
+      'attachment_url' => NULL,
+      'is_pinned'      => 1,
+      'status'         => 1,
+      'created'        => $now,
+      'expires'        => 0,
+      'uid'            => 1,
+    ],
+    [
+      'title'          => 'Mid-Semester Examination Schedule — November 2024',
+      'body'           => 'The mid-semester examinations for all B.Tech semesters will be held from 18th November to 25th November 2024. Please refer to the detailed schedule attached.',
+      'category'       => 'exam',
+      'attachment_url' => NULL,
+      'is_pinned'      => 0,
+      'status'         => 1,
+      'created'        => $now - 86400,
+      'expires'        => 0,
+      'uid'            => 1,
+    ],
+    [
+      'title'          => 'Faculty Development Programme — Power Electronics',
+      'body'           => 'A one-week Faculty Development Programme on Advanced Power Electronics and Drives will be conducted by the EE Department. Faculty members are requested to register.',
+      'category'       => 'event',
+      'attachment_url' => NULL,
+      'is_pinned'      => 0,
+      'status'         => 1,
+      'created'        => $now - 172800,
+      'expires'        => 0,
+      'uid'            => 1,
+    ],
+    [
+      'title'          => 'Result Declared — B.Tech 4th Semester (EE)',
+      'body'           => 'Results for B.Tech 4th Semester Electrical Engineering have been declared. Students can check their results on the university portal.',
+      'category'       => 'result',
+      'attachment_url' => NULL,
+      'is_pinned'      => 0,
+      'status'         => 1,
+      'created'        => $now - 259200,
+      'expires'        => 0,
+      'uid'            => 1,
+    ],
+  ];
+
+  foreach ($sample as $notice) {
+    $db->insert('ee_notices')->fields($notice)->execute();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ *
+ * Drops the ee_notices table when the module is uninstalled.
+ */
+function ee_notices_uninstall() {
+  \Drupal::database()->schema()->dropTable('ee_notices');
+}

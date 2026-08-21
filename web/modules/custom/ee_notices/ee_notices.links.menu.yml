@@ -1,0 +1,12 @@
+ee_notices.admin.list:
+  title: 'Notices'
+  description: 'Manage department notices.'
+  route_name: ee_notices.admin.list
+  parent: system.admin
+  weight: 10
+
+ee_notices.admin.add:
+  title: 'Add Notice'
+  route_name: ee_notices.admin.add
+  parent: ee_notices.admin.list
+  weight: 1

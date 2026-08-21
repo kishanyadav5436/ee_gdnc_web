@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * EE Events module — hook implementations.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function ee_events_help($route_name, RouteMatchInterface $route_match) {
+  if ($route_name === 'help.page.ee_events') {
+    return '<p>' . t('Provides an Event Management system for the EE GNDEC website. Exposes a JSON API at <code>/api/events</code>.') . '</p>';
+  }
+}

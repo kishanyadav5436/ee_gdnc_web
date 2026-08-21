@@ -1,0 +1,61 @@
+# ── Notice API Routes ──────────────────────────────────────────────────────
+
+ee_notices.api.list:
+  path: '/api/notices'
+  defaults:
+    _controller: '\Drupal\ee_notices\Controller\EeNoticesController::list'
+    _title: 'Notices API'
+  requirements:
+    _permission: 'access content'
+  methods: [GET]
+  options:
+    no_cache: TRUE
+
+ee_notices.api.single:
+  path: '/api/notices/{id}'
+  defaults:
+    _controller: '\Drupal\ee_notices\Controller\EeNoticesController::single'
+    _title: 'Notice Detail API'
+  requirements:
+    _permission: 'access content'
+    id: '\d+'
+  methods: [GET]
+  options:
+    no_cache: TRUE
+
+# ── Admin Notice Management Routes ─────────────────────────────────────────
+
+ee_notices.admin.list:
+  path: '/admin/ee-gndec/notices'
+  defaults:
+    _controller: '\Drupal\ee_notices\Controller\EeNoticesController::adminList'
+    _title: 'Manage Notices'
+  requirements:
+    _permission: 'administer site configuration'
+
+ee_notices.admin.add:
+  path: '/admin/ee-gndec/notices/add'
+  defaults:
+    _form: '\Drupal\ee_notices\Form\NoticeForm'
+    _title: 'Add Notice'
+  requirements:
+    _permission: 'administer site configuration'
+
+ee_notices.admin.edit:
+  path: '/admin/ee-gndec/notices/{id}/edit'
+  defaults:
+    _form: '\Drupal\ee_notices\Form\NoticeForm'
+    _title: 'Edit Notice'
+  requirements:
+    _permission: 'administer site configuration'
+    id: '\d+'
+
+ee_notices.admin.delete:
+  path: '/admin/ee-gndec/notices/{id}/delete'
+  defaults:
+    _controller: '\Drupal\ee_notices\Controller\EeNoticesController::delete'
+    _title: 'Delete Notice'
+  requirements:
+    _permission: 'administer site configuration'
+    id: '\d+'
+  methods: [GET, POST]

@@ -1,0 +1,12 @@
+ee_labs.admin.list:
+  title: 'Labs & Facilities'
+  description: 'Manage department laboratories and facilities.'
+  route_name: ee_labs.admin.list
+  parent: system.admin
+  weight: 13
+
+ee_labs.admin.add:
+  title: 'Add Lab'
+  route_name: ee_labs.admin.add
+  parent: ee_labs.admin.list
+  weight: 1

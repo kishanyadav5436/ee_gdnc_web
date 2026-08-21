@@ -1,0 +1,61 @@
+# ── Labs API Routes ────────────────────────────────────────────────────────
+
+ee_labs.api.list:
+  path: '/api/labs'
+  defaults:
+    _controller: '\Drupal\ee_labs\Controller\EeLabsController::list'
+    _title: 'Labs & Facilities API'
+  requirements:
+    _permission: 'access content'
+  methods: [GET]
+  options:
+    no_cache: TRUE
+
+ee_labs.api.single:
+  path: '/api/labs/{id}'
+  defaults:
+    _controller: '\Drupal\ee_labs\Controller\EeLabsController::single'
+    _title: 'Lab Detail API'
+  requirements:
+    _permission: 'access content'
+    id: '\d+'
+  methods: [GET]
+  options:
+    no_cache: TRUE
+
+# ── Admin Labs Management Routes ───────────────────────────────────────────
+
+ee_labs.admin.list:
+  path: '/admin/ee-gndec/labs'
+  defaults:
+    _controller: '\Drupal\ee_labs\Controller\EeLabsController::adminList'
+    _title: 'Manage Labs & Facilities'
+  requirements:
+    _permission: 'administer site configuration'
+
+ee_labs.admin.add:
+  path: '/admin/ee-gndec/labs/add'
+  defaults:
+    _form: '\Drupal\ee_labs\Form\LabForm'
+    _title: 'Add Lab'
+  requirements:
+    _permission: 'administer site configuration'
+
+ee_labs.admin.edit:
+  path: '/admin/ee-gndec/labs/{id}/edit'
+  defaults:
+    _form: '\Drupal\ee_labs\Form\LabForm'
+    _title: 'Edit Lab'
+  requirements:
+    _permission: 'administer site configuration'
+    id: '\d+'
+
+ee_labs.admin.delete:
+  path: '/admin/ee-gndec/labs/{id}/delete'
+  defaults:
+    _controller: '\Drupal\ee_labs\Controller\EeLabsController::delete'
+    _title: 'Delete Lab'
+  requirements:
+    _permission: 'administer site configuration'
+    id: '\d+'
+  methods: [GET, POST]

@@ -1,0 +1,189 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the EE Events module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function ee_events_schema() {
+  $schema['ee_events'] = [
+    'description' => 'Stores department events for EE GNDEC website.',
+    'fields' => [
+      'id' => [
+        'description' => 'Primary key.',
+        'type'        => 'serial',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+      ],
+      'title' => [
+        'description' => 'Event name/title.',
+        'type'        => 'varchar',
+        'length'      => 512,
+        'not null'    => TRUE,
+        'default'     => '',
+      ],
+      'description' => [
+        'description' => 'Full event description.',
+        'type'        => 'text',
+        'size'        => 'big',
+        'not null'    => FALSE,
+      ],
+      'event_type' => [
+        'description' => 'Type: workshop, seminar, webinar, competition, cultural, technical, other.',
+        'type'        => 'varchar',
+        'length'      => 64,
+        'not null'    => TRUE,
+        'default'     => 'other',
+      ],
+      'start_date' => [
+        'description' => 'Unix timestamp of event start.',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'end_date' => [
+        'description' => 'Unix timestamp of event end (0 = single day).',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'venue' => [
+        'description' => 'Location / venue of the event.',
+        'type'        => 'varchar',
+        'length'      => 512,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'organizer' => [
+        'description' => 'Name of organizer / department / club.',
+        'type'        => 'varchar',
+        'length'      => 256,
+        'not null'    => FALSE,
+        'default'     => 'EE Department, GNDEC',
+      ],
+      'registration_url' => [
+        'description' => 'URL to register for the event.',
+        'type'        => 'varchar',
+        'length'      => 1024,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'image_url' => [
+        'description' => 'Banner / poster image URL.',
+        'type'        => 'varchar',
+        'length'      => 1024,
+        'not null'    => FALSE,
+        'default'     => NULL,
+      ],
+      'is_featured' => [
+        'description' => 'Whether this event is featured on the homepage.',
+        'type'        => 'int',
+        'size'        => 'tiny',
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'status' => [
+        'description' => '1 = published, 0 = draft.',
+        'type'        => 'int',
+        'size'        => 'tiny',
+        'not null'    => TRUE,
+        'default'     => 1,
+      ],
+      'created' => [
+        'description' => 'Unix timestamp when the record was created.',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 0,
+      ],
+      'uid' => [
+        'description' => 'Drupal user ID of the creator.',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 1,
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'status_start' => ['status', 'start_date'],
+      'event_type'   => ['event_type'],
+      'is_featured'  => ['is_featured'],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ * Seeds sample events.
+ */
+function ee_events_install() {
+  $db  = \Drupal::database();
+  $now = \Drupal::time()->getRequestTime();
+
+  $sample = [
+    [
+      'title'            => 'National Conference on Emerging Trends in Electrical Engineering',
+      'description'      => 'A two-day national conference bringing together researchers and industry professionals to discuss emerging trends in power systems, renewable energy, and smart grids.',
+      'event_type'       => 'seminar',
+      'start_date'       => strtotime('+15 days', $now),
+      'end_date'         => strtotime('+16 days', $now),
+      'venue'            => 'Seminar Hall, GNDEC Ludhiana',
+      'organizer'        => 'EE Department, GNDEC',
+      'registration_url' => NULL,
+      'image_url'        => NULL,
+      'is_featured'      => 1,
+      'status'           => 1,
+      'created'          => $now,
+      'uid'              => 1,
+    ],
+    [
+      'title'            => 'Workshop on PLC & SCADA Systems',
+      'description'      => 'Hands-on workshop on Programmable Logic Controllers and SCADA systems for B.Tech 6th and 8th semester students.',
+      'event_type'       => 'workshop',
+      'start_date'       => strtotime('+5 days', $now),
+      'end_date'         => strtotime('+6 days', $now),
+      'venue'            => 'Control Systems Lab, EE Block',
+      'organizer'        => 'EE Department, GNDEC',
+      'registration_url' => NULL,
+      'image_url'        => NULL,
+      'is_featured'      => 1,
+      'status'           => 1,
+      'created'          => $now - 86400,
+      'uid'              => 1,
+    ],
+    [
+      'title'            => 'Techno-Fest 2024 — Technical Competition',
+      'description'      => 'Annual technical fest of the EE Department featuring project competitions, quiz, paper presentations, and robotics events.',
+      'event_type'       => 'competition',
+      'start_date'       => strtotime('+30 days', $now),
+      'end_date'         => strtotime('+31 days', $now),
+      'venue'            => 'Main Auditorium, GNDEC',
+      'organizer'        => 'IEEE Student Branch, GNDEC',
+      'registration_url' => NULL,
+      'image_url'        => NULL,
+      'is_featured'      => 0,
+      'status'           => 1,
+      'created'          => $now - 172800,
+      'uid'              => 1,
+    ],
+  ];
+
+  foreach ($sample as $event) {
+    $db->insert('ee_events')->fields($event)->execute();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function ee_events_uninstall() {
+  \Drupal::database()->schema()->dropTable('ee_events');
+}
